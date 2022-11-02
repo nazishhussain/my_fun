@@ -8,9 +8,10 @@ int str_len(char *str)
     {
         len++;
     }
-    /* If str = "Hello"
+    /* 
+    If str = "Hello"
     Its actual size is 6 Bytes Including NULL;
-    str_len will return 5, ie., excludinh Null character;
+    str_len will return 5, ie., excluding Null character;
     */
     return len;
 }
@@ -37,40 +38,74 @@ void str_cpy(const char* org_str, char* new_str)
 char* rev_org_str(char* str)
 {
     int len = str_len(str);
-    len--; //To reverse if we dont decrement, it will reverse NULL char also
-    char temp;
-    for(int i=0; i<len/2; i++)
+    
+    for(int i=0; i<=len/2; i++)
     {
-        swap_char(&str[i], &str[len - i]);
+        swap_char(&str[i], &str[len - i - 1]);
     }
-    //Reversing the original string
+    
+    /* Here, the original string is reversed*/
     return str;
 }
 
 char* rev_new_str(char* str)
 {
-    /* How to pass
+    /* 
+    How to pass
     char *str1 = rev_new_str(str);
     */
     int len = str_len(str);
     
-    char *new_str = malloc(sizeof(char) * (len+1) ); //Here len+1 is used to store NULL
+    /*Here len+1 is used to store NULL*/
+    char *new_str = malloc(sizeof(char) * (len+1) ); 
     str_cpy(str, new_str);
-    len--; //To reverse if we dont decrement, it will reverse NULL char also
     
-    for(int i=0; i<len/2; i++)
+    for(int i=0; i<=len/2; i++)
     {
-        swap_char(&new_str[i], &new_str[len - i]);
+        swap_char(&new_str[i], &new_str[len - i - 1]);
     }
-    //Reversing the original string
     return new_str;
+}
+
+char* num_to_str(int num)
+{
+    int temp=num, rev_num = 0, n = 0;
+    
+    /*Getting the number size to get string length*/
+    while(temp != 0)
+    {
+        temp = temp/10;
+        n++;
+    }
+    /*Incrementing n to strore NULL*/
+    char* str = malloc(sizeof(char)*n);
+    n=0;
+
+    /*Storing the number in string*/
+    while(num !=0)
+    {
+        str[n++] = '0' + num % 10;
+        num = num / 10;
+    }
+    str[n] = '\0';
+    
+    /*The numbers are stored in reverse order so reversing it again*/
+    rev_org_str(str);
+    
+    return str;
 }
 
 int main()
 {
     char str[] = "Hello World", str2[11];
-    char *str1 = rev_new_str(str);
-    //str_cpy(str, str2);
+    //char *str1 = rev_new_str(str);
+    char *str3 = num_to_str(12340500);
+    /*
+    printf("%s\n", str3);
+    printf("str3 size = %d\n", str_len("1234"));
     printf("%s\n", str);
     printf("%s\n",str1);
+    */
+   
 }
+
